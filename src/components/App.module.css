@@ -1,0 +1,57 @@
+
+.link {
+  fill: none;
+  stroke: #555;
+  stroke-opacity: 0.4;
+  stroke-width: 2px;
+}
+
+.node {
+  cursor: pointer;
+  pointer-events: all;
+}
+
+.nodeEnter {
+  r: 2.5em;
+  stroke-width: 10em;
+}
+
+.hide {
+  display: none;
+}
+
+.container {
+  margin-top: 100px;
+}
+
+.svg-div {
+  width: 50%;
+  float: left;
+  overflow-y: scroll;
+}
+
+.gl-root {
+  width: 50%;
+  float: right;
+}
+
+.svg {
+  width: 100%;
+}
+
+.gl-label {
+  height: 30px;
+}
+
+.gl-div {
+  height: 300px;
+}
+
+.gl {
+  height: 270px;
+}
+
+.channel-dims {
+  padding-left: 10px;
+  padding-right: 10px;
+}

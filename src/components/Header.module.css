@@ -1,0 +1,14 @@
+.select {
+    border-color: aquamarine;
+}
+
+.header {
+    position: fixed;
+    height: 100px;
+    width: 100%;
+}
+
+.theme-switch {
+    flex: 1;
+    flex-grow: 1;
+}
