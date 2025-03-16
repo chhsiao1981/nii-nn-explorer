@@ -1,5 +1,5 @@
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
-import type { Niivue, NVImage } from '@niivue/niivue/packages/niivue/src/niivue'
+import type { Niivue, NVImage } from '@niivue/niivue'
 import React from 'react'
 import { type TableComponents, TableVirtuoso } from 'react-virtuoso'
 import { Fragment } from 'react/jsx-runtime'
