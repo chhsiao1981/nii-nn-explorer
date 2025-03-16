@@ -13,11 +13,7 @@ import { d3NodeGetDefaultAssignedNode } from './d3nodeUtils'
 import { metaExtractorToD3Meta } from './metaToD3Node'
 
 import { CssBaseline, type PaletteMode, TextField, ThemeProvider, createTheme } from '@mui/material'
-import {
-  type NVImage,
-  type NiiVueLocation,
-  Niivue,
-} from '@niivue/niivue/packages/niivue/src/niivue'
+import { type NVImage, type NiiVueLocation, Niivue } from '@niivue/niivue'
 import { vec3 } from 'gl-matrix'
 import { isSkipSaveFileType } from '../reducers/item'
 import IndexSelect from './IndexSelect'

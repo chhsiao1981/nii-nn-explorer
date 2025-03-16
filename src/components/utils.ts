@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { NVImage, type Niivue } from '@niivue/niivue/packages/niivue/src/niivue'
+import { NVImage, type Niivue } from '@niivue/niivue'
 import type { vec3 } from 'gl-matrix'
 import { NIFTI2 } from 'nifti-reader-js'
 import { genUUID } from 'react-reducer-utils'

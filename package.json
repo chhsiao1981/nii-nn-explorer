@@ -13,7 +13,7 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/material": "^6.4.4",
-    "@niivue/niivue": "niivue/niivue",
+    "@niivue/niivue": "^0.52.0",
     "@protobuf-ts/plugin": "^2.9.4",
     "@zip.js/zip.js": "^2.7.54",
     "apache-arrow": "^19.0.1",
@@ -23,7 +23,8 @@
     "react-dom": "^19.0.0",
     "react-reducer-utils": "^5.0.1",
     "react-virtuoso": "^4.12.5",
-    "yaml": "^2.7.0"
+    "yaml": "^2.7.0",
+    "nifti-reader-js": "^0.8.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
@@ -43,7 +44,6 @@
     "gl-matrix": "^3.4.3",
     "globals": "^15.14.0",
     "jiti": "^2.4.2",
-    "nifti-reader-js": "^0.7.1",
     "rxjs": "^7.8.1",
     "typescript": "~5.7.3",
     "typescript-eslint": "^8.21.0",
