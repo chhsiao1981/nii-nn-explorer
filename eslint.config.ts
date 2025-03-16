@@ -11,6 +11,7 @@ export default tseslint.config(
       '.venv',
       'eslint.config.ts',
       'config.dev/index.ts',
+      'config.tmpl/index.ts',
       'index.d.ts',
       'proto/es6/nnextractor_pb.js',
       'proto/js/nnextractor_pb.js',
