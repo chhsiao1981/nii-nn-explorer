@@ -1,8 +1,17 @@
 {
   "name": "nii-nn-explorer",
-  "private": true,
   "version": "0.0.1",
   "type": "module",
+  "author": {
+    "name": "Chuan-Heng Hsiao",
+    "email": "hsiao.chuanheng@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chhsiao1981/nii-nn-explorer"
+  },
+  "license": "BSD-3-Clause",
+  "homepage": "https://github.com/chhsiao1981/nii-nn-explorer",
   "scripts": {
     "start": "vite",
     "build": "tsc -b && vite build",
