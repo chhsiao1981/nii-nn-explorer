@@ -3,10 +3,6 @@
 `nii-nn-explorer` intends to explore deep neural network models for 3D medical images by geometrically aligning each step, including preprocessing / layers in the model / postprocess,
 to the input images.
 
-## Getting Started
-
-You can go to [The Demo Site](https://www.nii-nn-explorer.dev) to feel how `nii-nn-explorer` works.
-
 ## Overview
 
 `nii-nn-explorer` is the visualization frontend for [nn-extractor](https://github.com/chhsiao1981/nn-extractor), specifically for the applications for 3D medical images. Given a 3D medical image and a deep neural network model, we would like to know **why** the model generates the output, through deep diving the relationship of each step in the whole prediction process.
