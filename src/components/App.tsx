@@ -7,7 +7,13 @@ import Header from './Header'
 import { Tree, TreeClean } from './Tree'
 
 import * as DoApp from '../reducers/app'
-import type { Extractor, MetaExtractor, MetaItem, Model } from '../reducers/types'
+import {
+  OpType,
+  type Extractor,
+  type MetaExtractor,
+  type MetaItem,
+  type Model,
+} from '../reducers/types'
 import { type D3Node, D3NodeType } from './d3node'
 import { d3NodeGetDefaultAssignedNode } from './d3nodeUtils'
 import { metaExtractorToD3Meta } from './metaToD3Node'
@@ -23,6 +29,7 @@ import {
   getVoxelValue,
   niivueInfoDimsToDisplayDims as dimsSARToDimsRAS,
   niivueInfoToNVImage,
+  niivueInfoToBackOpacity,
   getFracFromVox,
   getVoxFromFrac,
 } from './utils'
@@ -30,6 +37,7 @@ import {
 import Snackbar from '@mui/material/Snackbar'
 
 import useWindowSize from './hooks/useWindowSize'
+import type { NIIVueImgInfo } from './types'
 
 const defaultAppState: DoApp.State = {
   modelList: [],
@@ -61,7 +69,9 @@ const App = () => {
 
   const [assignedNode, setAssignedNode] = useState<D3Node>(defaultAssignedNode)
 
-  const [niivueRefImg, setNiivueRefImg] = useState<NVImage>(null)
+  const [niivueRefImgInfo, setNiivueRefImgInfo] = useState<NIIVueImgInfo>(null)
+
+  const [niivueToRefImgInfo, setNiivueToRefImgInfo] = useState<NIIVueImgInfo>(null)
   const [niivueFocusedLocation, setNiivueFocusedLocation] = useState<vec3>([0, 0, 0])
   const [niivueFocusedValue, setNiivueFocusedValue] = useState(0)
   const [niivueName, setNiivueName] = useState(defaultNiivueName)
@@ -191,6 +201,7 @@ const App = () => {
     }
 
     const nv = new Niivue()
+
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     nv.attachToCanvas(glref.current)
     setTheNiivue(nv)
@@ -242,16 +253,18 @@ const App = () => {
 
     // XXX hack for geo-identity.
     if (root.niivueInfo.isGeoIdentity) {
-      setNiivueRefImg(theNiivue.back)
+      setNiivueToRefImgInfo({ img: niivueRefImgInfo.img, info: niivueRefImgInfo.info })
       while (theNiivue.back) {
         theNiivue.setVolume(theNiivue.back, -1)
       }
-    } else if (niivueRefImg !== null) {
+      setNiivueRefImgInfo(null)
+    } else if (niivueToRefImgInfo !== null) {
       while (theNiivue.back) {
         theNiivue.setVolume(theNiivue.back, -1)
       }
-      theNiivue.addVolume(niivueRefImg)
-      setNiivueRefImg(null)
+      theNiivue.addVolume(niivueToRefImgInfo.img)
+      setNiivueRefImgInfo({ img: niivueToRefImgInfo.img, info: niivueToRefImgInfo.info })
+      setNiivueToRefImgInfo(null)
     }
 
     // XXX remove other overlays for now for simplicity.
@@ -265,9 +278,10 @@ const App = () => {
     theNiivue.addVolume(img)
 
     if (origBack) {
-      origBack.opacity = 0
+      origBack.opacity = niivueInfoToBackOpacity(root.niivueInfo)
       theNiivue.setVolume(img, 1)
     } else {
+      setNiivueRefImgInfo({ img: img, info: root.niivueInfo })
       theNiivue.setVolume(img, 0)
     }
 
@@ -293,6 +307,7 @@ const App = () => {
 
     theNiivue.drawScene()
     theNiivue.createOnLocationChange()
+
     setIsBusy(false)
   }, [glref, theNiivue, root.niivueInfo, root.refImgInfo])
 
@@ -305,10 +320,8 @@ const App = () => {
     }
 
     if (assignedNode.protobufInfo) {
-      const protobufInfo = assignedNode.protobufInfo
-
       setIsBusy(true)
-      doApp.getProtobuf(rootID, assignedNode.name, protobufInfo)
+      doApp.getProtobuf(rootID, assignedNode.name, assignedNode.protobufInfo)
     }
 
     if (assignedNode.theType === D3NodeType.MetaItem) {

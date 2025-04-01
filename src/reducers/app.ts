@@ -24,10 +24,13 @@ import {
   type Model,
   type NIIVueInfo,
   type NNTensor,
+  OpType,
   type ProtobufResponse,
   type ProtobufInfo,
   ProtobufType,
   type RefImgInfo,
+  ItemType,
+  NNTensorArrayType,
 } from './types'
 
 export const myClass = 'nn-visualizer/app'
@@ -123,6 +126,7 @@ export const getProtobuf = (
     dimsSAR,
     protobufType,
     isGeoIdentity,
+    isSegmentation,
   } = protobufInfo
 
   return async (dispatch: Dispatch<State>, getClassState: () => ClassState<State>): void => {
@@ -152,7 +156,7 @@ export const getProtobuf = (
     } else if (protobufType === ProtobufType.Item) {
       tensor = getProtobufProcessItemTensor(binaryArray, dimsSAR)
     } else if (protobufType === ProtobufType.OpItem) {
-      tensor = getProtobufProcessOpItemTensor(binaryArray, dimsSAR)
+      tensor = getProtobufProcessOpItemTensor(binaryArray, dimsSAR, protobufInfo.isSegmentation)
     } else if (protobufType === ProtobufType.NNParameter) {
       tensor = getProtobufProcessNNRecordTensor(binaryArray, dimsSAR)
     }
@@ -181,6 +185,8 @@ export const getProtobuf = (
       extractorID,
 
       isGeoIdentity: isGeoIdentity ?? false,
+
+      isSegmentation: isSegmentation ?? false,
     }
 
     const toUpdate = { niivueInfo }
@@ -228,12 +234,18 @@ const getProtobufProcessItemTensor = (binaryArray: Uint8Array, dimsSAR: number[]
   return null
 }
 
-const getProtobufProcessOpItemTensor = (binaryArray: Uint8Array, dimsSAR: number[]) => {
+const getProtobufProcessOpItemTensor = (
+  binaryArray: Uint8Array,
+  dimsSAR: number[],
+  isSegmentation?: boolean,
+) => {
   const op_item_pb = nnextractor_pb.OpItem.fromBinary(binaryArray)
 
   const nntensorBinary = op_item_pb.tensor?.theBytes ?? null
 
-  return bytesToNNTensor(nntensorBinary, dimsSAR)
+  const arrayType = isSegmentation ? NNTensorArrayType.UINT8 : NNTensorArrayType.FLOAT32
+
+  return bytesToNNTensor(nntensorBinary, dimsSAR, arrayType)
 }
 
 const inferOriginRASDirectionRASSpacingRASFromAffineRAS = (

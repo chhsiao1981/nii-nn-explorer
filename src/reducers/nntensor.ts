@@ -1,5 +1,5 @@
 import { tableFromIPC } from 'apache-arrow'
-import type { RecursiveNumber, NNTensor } from './types'
+import { type RecursiveNumber, type NNTensor, NNTensorArrayType } from './types'
 
 export const reshape1d = (ary_1d: number[], shape: number[]): [RecursiveNumber, number[]] => {
   if (ary_1d.length === 0) {
@@ -30,6 +30,7 @@ export const reshape1d = (ary_1d: number[], shape: number[]): [RecursiveNumber, 
 export const bytesToNNTensor = (
   theBytes: Uint8Array<ArrayBufferLike> | null,
   shape: number[],
+  arrayType: NNTensorArrayType,
 ): NNTensor | null => {
   if (!theBytes) {
     return null
@@ -43,6 +44,7 @@ export const bytesToNNTensor = (
   // https://github.com/niivue/niivue/blob/main/packages/niivue/src/niivue/index.ts#L6398
   //
   // const [array_nd, _] = reshape1d(array_1d, shape)
-
-  return { shape: shape, array: new Float32Array(array_1d) }
+  const array =
+    arrayType === NNTensorArrayType.UINT8 ? new Uint8Array(array_1d) : new Float32Array(array_1d)
+  return { shape: shape, array }
 }

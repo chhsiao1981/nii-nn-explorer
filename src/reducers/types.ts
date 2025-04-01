@@ -64,6 +64,8 @@ export enum OpType {
   AFFINE = 'affine', // RAS
 
   GEO_IDENTITY = 'geo_identity',
+
+  SEGMENTATION = 'segmentation',
 }
 
 export enum ItemType {
@@ -223,9 +225,14 @@ export interface MetaNNRecord {
 
 export type RecursiveNumber = number[] | RecursiveNumber[]
 
+export enum NNTensorArrayType {
+  FLOAT32 = 'float32',
+  UINT8 = 'uint8',
+}
+
 export interface NNTensor {
   shape: number[]
-  array: Float32Array<ArrayBufferLike>
+  array: Float32Array<ArrayBufferLike> | Uint8Array<ArrayBufferLike>
 }
 
 export interface NIIVueInfo {
@@ -242,6 +249,8 @@ export interface NIIVueInfo {
   extractorID: string
 
   isGeoIdentity: boolean
+
+  isSegmentation: boolean
 }
 
 export enum ProtobufType {
@@ -275,6 +284,8 @@ export interface ProtobufInfo {
   protobufType: ProtobufType
 
   isGeoIdentity?: boolean
+
+  isSegmentation?: boolean
 }
 
 export interface RefImgInfo {

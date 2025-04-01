@@ -9,6 +9,8 @@ import {
   type SelectChangeEvent,
 } from '@mui/material'
 
+import GitHubIcon from '@mui/icons-material/GitHub'
+
 import type { Dispatch, SetStateAction } from 'react'
 
 import CircularProgress from '@mui/material/CircularProgress'
@@ -75,6 +77,10 @@ const Header = (props: Props) => {
     return selected ?? placeholder
   }
 
+  const githubLinkStyle = {
+    color: themeMode === 'dark' ? 'white' : 'black',
+  }
+
   return (
     <div className={styles['header']}>
       <FormControl sx={{ m: 1, minWidth: 120 }}>
@@ -110,6 +116,17 @@ const Header = (props: Props) => {
           {metaList.map(renderMeta)}
         </Select>
       </FormControl>
+      {isBusy && <CircularProgress />}
+
+      <a
+        href='https://github.com/chhsiao1981/nii-nn-explorer'
+        rel='noopener noreferrer'
+        target='_blank'
+        className={styles['github-icon']}
+        style={githubLinkStyle}
+      >
+        <GitHubIcon sx={{ width: '36px', height: '36px' }} />
+      </a>
       <FormControl className={styles['theme-switch']}>
         <ThemeSwitch
           themeMode={themeMode}
@@ -117,7 +134,7 @@ const Header = (props: Props) => {
           setThemeMode={setThemeMode}
         />
       </FormControl>
-      {isBusy && <CircularProgress />}
+
       <Breadcrumbs aria-label='breadcrumb'>
         <Link underline='hover' color='inherit' href={`/${selectedModel?.name ?? ''}`}>
           {selectedModel?.name ?? ''}

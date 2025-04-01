@@ -333,6 +333,8 @@ const d3SeqItemToD3MetaWithProtobufInfo = (
   }
 
   if (node.item.the_type === ItemType.OP_ITEM) {
+    const isSegmentation = node.item?.value?.op_type === OpType.SEGMENTATION
+
     if (isUpdatedContextInfo) {
       const dimsSAR = d3SeqToD3WithProtobufInfoIntegrateDimsSAR(
         node.item.value.tensor.shape,
@@ -355,6 +357,8 @@ const d3SeqItemToD3MetaWithProtobufInfo = (
         dimsSAR: dimsSAR,
 
         protobufType: ProtobufType.OpItem,
+
+        isSegmentation: isSegmentation,
       }
 
       return [currentContextInfo, true]
@@ -388,6 +392,8 @@ const d3SeqItemToD3MetaWithProtobufInfo = (
       dimsSAR: newContextInfo.dimsSAR,
 
       protobufType: ProtobufType.OpItem,
+
+      isSegmentation: isSegmentation,
     }
 
     return [node.protobufInfo.contextInfo, true]

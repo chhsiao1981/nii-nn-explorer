@@ -11,4 +11,10 @@
 .theme-switch {
     flex: 1;
     flex-grow: 1;
+    float: right;
+}
+
+.github-icon {
+    float: right;
+    margin-right: 20px;
 }
