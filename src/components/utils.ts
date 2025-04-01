@@ -1,11 +1,13 @@
 import { useState } from 'react'
 
-import { NVImage, type Niivue } from '@niivue/niivue'
+import { cmapper, COLORMAP_TYPE, NVImage, type Niivue } from '@niivue/niivue'
+
 import type { vec3 } from 'gl-matrix'
 import { NIFTI2 } from 'nifti-reader-js'
 import { genUUID } from 'react-reducer-utils'
-import type { NIIVueInfo } from '../reducers/types'
+import { type NIIVueInfo, OpType } from '../reducers/types'
 import type { BusyState } from './types'
+import { color } from 'd3'
 
 export const useBusyState = (): [BusyState, () => void, () => void] => {
   const [busyState, setBusyState] = useState<BusyState>({ busyCount: { count: 0 } })
@@ -109,7 +111,25 @@ export const niivueInfoToNVImage = (niivueInfo: NIIVueInfo): NVImage => {
   img.calculateRAS()
   img.calMinMax(0)
 
+  if (niivueInfo.isSegmentation) {
+    const colormapLabel = cmapper.makeDrawLut('$itksnap')
+    colormapLabel.lut[0] = 0
+    colormapLabel.lut[1] = 0
+    colormapLabel.lut[2] = 0
+    colormapLabel.lut[3] = 0
+    colormapLabel.min = 0
+    colormapLabel.max = 130
+    img.hdr.datatypeCode = 2 // NiiDataType.DT_UINT8
+    img.hdr.intent_code = 1002 // NiiIntentCode.NIFTI_INTENT_LABEL
+    img.colormapLabel = colormapLabel
+    img.colormapType = COLORMAP_TYPE.ZERO_TO_MAX_TRANSPARENT_BELOW_MIN
+  }
+
   return img
+}
+
+export const niivueInfoToBackOpacity = (niivueInfo: NIIVueInfo) => {
+  return niivueInfo.isSegmentation ? 1 : 0
 }
 
 export const niivueInfoDimsToDisplayDims = (dims: number[]) => {
