@@ -24,7 +24,7 @@
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^7.0.1",
     "@mui/material": "^7.0.1",
-    "@niivue/niivue": "^0.52.0",
+    "@niivue/niivue": "^0.54.0",
     "@protobuf-ts/plugin": "^2.9.4",
     "@zip.js/zip.js": "^2.7.54",
     "apache-arrow": "^19.0.1",
