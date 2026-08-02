@@ -1,15 +1,15 @@
-import type { NVImage } from '@niivue/niivue'
-import type { NIIVueInfo } from '../reducers/types'
+import type { NVImage } from "@niivue/niivue";
+import type { NIIVueInfo } from "../thunks/types";
 
 export interface BusyCount {
-  count: number
+  count: number;
 }
 
 export interface BusyState {
-  busyCount: BusyCount
+  busyCount: BusyCount;
 }
 
 export interface NIIVueImgInfo {
-  img: NVImage
-  info: NIIVueInfo
+  img: NVImage;
+  info: NIIVueInfo;
 }
