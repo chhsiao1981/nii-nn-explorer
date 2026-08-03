@@ -14,6 +14,7 @@ import {
 } from "./serverApi";
 import {
   type Extractor,
+  NNTensorArrayType,
   type ProtobufInfo,
   ProtobufType,
   type RefImgInfo,
